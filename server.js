@@ -33,6 +33,13 @@ app.get("/api/config", (req, res) => {
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({}).then((foundWorkouts) => {
         res.json(foundWorkouts);
+    }).catch(err => {
+        console.log(err);
+        res.json({
+            error: true,
+            data: null,
+            message: "Failed to retrieve Workouts.",
+        });
     });
 });
 
@@ -43,8 +50,15 @@ app.post("/api/workouts", (req, res) => {
 });
 
 app.get("/api/exercises", (req, res) => {
-    db.Exercise.find({}).then((foundExercisess) => {
+    db.Exercise.find({}).then((foundExercises) => {
         res.json(foundExercises);
+    }).catch(err => {
+        console.log(err);
+        res.json({
+            error: true,
+            data: null,
+            message: "Failed to retrieve Exercises.",
+        });
     });
 });
 
