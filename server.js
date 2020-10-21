@@ -8,6 +8,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static("public"));
+
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/architecture", {
     useNewUrlParser: true, useUnifiedTopology: true
 });
@@ -31,5 +33,5 @@ app.get("/api/config", (req, res) => {
 
 
 app.listen(PORT,() => {
-    console.log(`App is running on http://localhost${PORT}`);
+    console.log(`App is running on http://localhost:${PORT}`);
 });
