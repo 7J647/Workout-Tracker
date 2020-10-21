@@ -14,7 +14,6 @@ const WorkoutSchema = new Schema({
         }
       ]
     });
-})
 
 
 
