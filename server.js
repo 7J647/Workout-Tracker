@@ -4,6 +4,11 @@ const db = require("./models");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+// const exercisesController = require("./controllers/exercisesControoler");
+// const workoutsController = require("./controllers/workoutssControoler");
+
+//need to use the above
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -11,7 +16,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", {
-    useNewUrlParser: true, useUnifiedTopology: true
+    useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false,
 });
 
 const connection = mongoose.connection;
@@ -46,6 +51,13 @@ app.get("/api/workouts", (req, res) => {
 app.post("/api/workouts", (req, res) => {
     db.Workout.create(req.body).then((newWorkout) => {
         res.json(newWorkout);
+    }).catch(err => {
+        console.log(err);
+        res.json({
+            error: true,
+            data: null,
+            message: "Failed to create workout.",
+        });
     });
 });
 
@@ -65,6 +77,13 @@ app.get("/api/exercises", (req, res) => {
 app.post("/api/exercises", (req, res) => {
     db.Exercise.create(req.body).then((newExercise) => {
         res.json(newExercise);
+    }).catch(err => {
+        console.log(err);
+        res.json({
+            error: true,
+            data: null,
+            message: "Failed to create exercise.",
+        });
     });
 });
 
