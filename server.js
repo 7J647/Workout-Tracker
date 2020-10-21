@@ -30,6 +30,30 @@ app.get("/api/config", (req, res) => {
     });
 });
 
+app.get("/api/workouts", (req, res) => {
+    db.Workout.find({}).then((foundWorkouts) => {
+        res.json(foundWorkouts);
+    });
+});
+
+app.post("/api/workouts", (req, res) => {
+    db.Workout.create(req.body).then((newWorkout) => {
+        res.json(newWorkout);
+    });
+});
+
+app.get("/api/exercises", (req, res) => {
+    db.Exercise.find({}).then((foundExercisess) => {
+        res.json(foundExercises);
+    });
+});
+
+app.post("/api/exercises", (req, res) => {
+    db.Exercise.create(req.body).then((newExercise) => {
+        res.json(newExercise);
+    });
+});
+
 app.get("/", (req, res) => {
     res.render("index");
 })
