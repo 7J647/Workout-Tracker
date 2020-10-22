@@ -56,6 +56,19 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
+app.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({}).then((foundWorkoutRange) => {
+        res.json(foundWorkoutRange);
+    }).catch(err => {
+        console.log(err);
+        res.json({
+            error: true,
+            data: null,
+            message: "Failed to retrieve Workouts.",
+        });
+    });
+});
+
 app.post("/api/workouts", (req, res) => {
     db.Workout.create(req.body).then((newWorkout) => {
         res.json(newWorkout);
