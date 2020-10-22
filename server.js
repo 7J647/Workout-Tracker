@@ -4,7 +4,7 @@ const db = require("./models");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const exercisesController = require("./controllers/exercisesController");
+// const exercisesController = require("./controllers/exercisesController");
 const workoutsController = require("./controllers/workoutsController");
 
 
@@ -34,7 +34,7 @@ connection.on("error", (err) => {
     console.log("Mongoose connection error: ", err);
 });
 
-app.use(exercisesController);
+// app.use(exercisesController);
 app.use(workoutsController);
 
 app.get("/api/config", (req, res) => {
@@ -58,6 +58,7 @@ app.get("/api/workouts", (req, res) => {
 
 app.get("/api/workouts/range", (req, res) => {
     db.Workout.find({}).then((foundWorkoutRange) => {
+        //.limit(7)
         res.json(foundWorkoutRange);
     }).catch(err => {
         console.log(err);
@@ -82,41 +83,41 @@ app.post("/api/workouts", (req, res) => {
     });
 });
 
-app.get("/api/exercises", (req, res) => {
-    db.Exercise.find({}).then((foundExercises) => {
-        res.json(foundExercises);
-    }).catch(err => {
-        console.log(err);
-        res.json({
-            error: true,
-            data: null,
-            message: "Failed to retrieve Exercises.",
-        });
-    });
-});
+// app.get("/api/exercises", (req, res) => {
+//     db.Exercise.find({}).then((foundExercises) => {
+//         res.json(foundExercises);
+//     }).catch(err => {
+//         console.log(err);
+//         res.json({
+//             error: true,
+//             data: null,
+//             message: "Failed to retrieve Exercises.",
+//         });
+//     });
+// });
 
-app.post("/api/exercises", (req, res) => {
-    db.Exercise.create(req.body).then((newExercise) => {
-        res.json(newExercise);
-    }).catch(err => {
-        console.log(err);
-        res.json({
-            error: true,
-            data: null,
-            message: "Failed to create exercise.",
-        });
-    });
-});
+// app.post("/api/exercises", (req, res) => {
+//     db.Exercise.create(req.body).then((newExercise) => {
+//         res.json(newExercise);
+//     }).catch(err => {
+//         console.log(err);
+//         res.json({
+//             error: true,
+//             data: null,
+//             message: "Failed to create exercise.",
+//         });
+//     });
+// });
 
-app.get("/api/workouts", (req, res) => {
-    db.Workout.find({})
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.json(err);
-        });
-});
+// app.get("/api/workouts", (req, res) => {
+//     db.Workout.find({})
+//         .then(dbWorkout => {
+//             res.json(dbWorkout);
+//         })
+//         .catch(err => {
+//             res.json(err);
+//         });
+// });
 
 
 
