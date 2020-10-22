@@ -1,10 +1,25 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 const db = require("../models");
 
+router.get("/exercise", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/exercise.html"));
+});
+
+router.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
+router.get("/stats", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/stats.html"));
+});
+
+
+
 router.get("/api/workouts", (req, res) => {
-    db.Exercise.find({})
+    db.Workout.find({})
     .populate("exercises")
     .then((foundWorkouts) => {
         res.json(foundWorkouts);
@@ -34,7 +49,7 @@ router.get("/api/exercises/:id", (req, res) => {
 });
 
 router.post("/api/workouts", (req, res) => {
-    db.Exercise.create(req.body).then((newWorkout) => {
+    db.Workout.create(req.body).then((newWorkout) => {
         res.json(newWorkout);
     }).catch(err => {
         console.log(err);
@@ -47,7 +62,8 @@ router.post("/api/workouts", (req, res) => {
 });
 
 router.put("/api/workouts/:id", (req, res) => {
-    db.Exercise.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    db.Exercise.create(req.body)
+    .then((newExercise) => db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: newExercise._id } }, {new: true}))
     .then((updatedWorkout) => {
         res.json(updatedWorkout);
     }).catch(err => {
@@ -57,7 +73,7 @@ router.put("/api/workouts/:id", (req, res) => {
             data: null,
             message: `Failed to update Workout with id: ${req.params.id}.`,
         });
-    });
+    })
 });
 
 router.delete("/api/workouts/:id", (req, res) => {

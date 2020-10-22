@@ -4,10 +4,9 @@ const db = require("./models");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-// const exercisesController = require("./controllers/exercisesControoler");
-// const workoutsController = require("./controllers/workoutssControoler");
+const exercisesController = require("./controllers/exercisesController");
+const workoutsController = require("./controllers/workoutsController");
 
-//need to use the above
 
 
 app.use(express.urlencoded({ extended: true }));
@@ -28,6 +27,9 @@ connection.on("connected", () => {
 connection.on("error", (err) => {
     console.log("Mongoose connection error: ", err);
 });
+
+app.use(exercisesController);
+app.use(workoutsController);
 
 app.get("/api/config", (req, res) => {
     res.json({
@@ -87,10 +89,6 @@ app.post("/api/exercises", (req, res) => {
     });
 });
 
-app.get("/", (req, res) => {
-    res.render("index");
-})
-
 app.get("/api/workouts", (req, res) => {
     db.Workout.find({})
         .then(dbWorkout => {
@@ -100,6 +98,8 @@ app.get("/api/workouts", (req, res) => {
             res.json(err);
         });
 });
+
+
 
 
 // app.post("/api/workouts", ({body}, res) => {
