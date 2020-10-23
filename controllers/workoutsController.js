@@ -4,6 +4,9 @@ const path = require("path");
 
 const db = require("../models");
 
+//these next 3 routes should probably be in server.js but even though it would mean 
+//changing just one dot in the relative path I decided not to mess with them.
+
 router.get("/exercise", function (req, res) {
     res.sendFile(path.join(__dirname, "../public/exercise.html"));
 });
@@ -17,52 +20,7 @@ router.get("/stats", function (req, res) {
 });
 
 
-
-// router.get("/api/workouts", (req, res) => {
-//     db.Workout.find({})
-//     .populate("exercises")
-//     .then((foundWorkouts) => {
-//         res.json(foundWorkouts);
-//     }).catch(err => {
-//         console.log(err);
-//         res.json({
-//             error: true,
-//             data: null,
-//             message: "Failed to retrieve Workouts.",
-//         });
-//     });
-// });
-
-// router.get("/api/exercises/:id", (req, res) => {
-//     db.Exercise.findById(req.params.id)
-//     .populate("exercises")
-//     .then((foundExercise) => {
-//         res.json(foundExercise);
-//     }).catch(err => {
-//         console.log(err);
-//         res.json({
-//             error: true,
-//             data: null,
-//             message: `Failed to retrieve Exercise with id: ${req.params.id}.`,
-//         });
-//     });
-// });
-
-// router.post("/api/workouts", (req, res) => {
-//     db.Workout.create(req.body).then((newWorkout) => {
-//         res.json(newWorkout);
-//     }).catch(err => {
-//         console.log(err);
-//         res.json({
-//             error: true,
-//             data: null,
-//             message: "Failed to create workout.",
-//         });
-//     });
-// });
-
 router.put("/api/workouts/:id", (req, res) => {
-    // db.Exercise.create(req.body).then((newExercise) => 
     db.Workout.findByIdAndUpdate(req.params.id, { $push: { exercises: req.body } }, {new: true})
     .then((updatedWorkout) => {
         res.json(updatedWorkout);
@@ -76,6 +34,8 @@ router.put("/api/workouts/:id", (req, res) => {
     })
 });
 
+
+//this is not a functional route based on the front end design but I kept in here for CRUD purposes
 router.delete("/api/workouts/:id", (req, res) => {
     db.Workout.findByIdAndDelete(req.params.id, req.body)
     .then((deletedWorkout) => {
