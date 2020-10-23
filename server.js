@@ -54,9 +54,9 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
+//.limit(7) limits the stats to the last 7 days' workouts
 app.get("/api/workouts/range", (req, res) => {
-    db.Workout.find({}).then((foundWorkoutRange) => {
-        //.limit(7)
+    db.Workout.find({}).limit(7).then((foundWorkoutRange) => {
         res.json(foundWorkoutRange);
     }).catch(err => {
         console.log(err);
