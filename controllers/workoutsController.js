@@ -77,7 +77,7 @@ router.put("/api/workouts/:id", (req, res) => {
 });
 
 router.delete("/api/workouts/:id", (req, res) => {
-    db.Exercise.findByIdAndDelete(req.params.id, req.body)
+    db.Workout.findByIdAndDelete(req.params.id, req.body)
     .then((deletedWorkout) => {
         res.json(deletedWorkout);
     }).catch(err => {

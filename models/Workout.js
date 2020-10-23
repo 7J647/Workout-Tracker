@@ -25,6 +25,7 @@ const WorkoutSchema = new Schema({
             },
             duration: {
                 type: Number,
+                required: "Duration is Required",
             },
             weight: {
                 type: Number,
@@ -39,8 +40,8 @@ const WorkoutSchema = new Schema({
       ]
     },
     {
+        //this includes virtual properties when data is requested
         toJSON: {
-          // include any virtual properties when data is requested
           virtuals: true
         }
     });
@@ -50,8 +51,6 @@ const WorkoutSchema = new Schema({
     WorkoutSchema.virtual("totalDuration").get(function() {
         return this.exercises.reduce((total,current) =>  total + current.duration,0)
       });
-
-    //   this.exercises.reduce((total,current)=> return total + current,0)
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
