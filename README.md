@@ -13,7 +13,7 @@
 
 ## Introduction 
 
-The assignment here was to created a "Workout Tracker" which required the creation of a Mongo db with a Mongoose schema and handle routes with Express.  We were provided with all of the front end code and from there we had to create the models to mirror the seed data provided, write the server routes needed, and connect the database with Heroku.
+The assignment here was to create a "Workout Tracker" which required the creation of a Mongo db with a Mongoose schema and handle routes with Express.  We were provided with all of the front end code and from there we had to create the models to mirror the seed data provided, write the server routes needed, and connect the database with Heroku.
 
 
 ## Instructions
